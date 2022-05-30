@@ -5,28 +5,31 @@ const jwt = require("jsonwebtoken");
 
 // register
 exports.register = async (req, res) => {
-  //validation schema
-  const schema = joi.object({
-    email: joi.string().email().min(5).required(), // joi req.body
-    password: joi.string().min(5).required(),
-    fullname: joi.string().min(2).required(),
-    phone: joi.number().min(10).required(),
-    gender: joi.string().min(3).required(),
-    address: joi.string().min(3).required(),
-    subscribe: joi.boolean(),
-  });
-
-  const { error } = schema.validate(req.body);
-
-  if (error) {
-    return res.status(400).send({
-      error: {
-        message: error.details[0].message,
-      },
-    });
-  }
-
   try {
+    const data = req.body;
+    const { email, password } = data;
+
+    //validation schema
+    const schema = joi.object({
+      email: joi.string().email().min(5).required(), // joi req.body
+      password: joi.string().min(5).required(),
+      fullname: joi.string().min(2).required(),
+      phone: joi.number().min(10).required(),
+      gender: joi.string().min(3).required(),
+      address: joi.string().min(3).required(),
+      subscribe: joi.boolean(),
+    });
+
+    const { error } = schema.validate(req.body);
+
+    if (error) {
+      return res.status(400).send({
+        error: {
+          message: error.details[0].message,
+        },
+      });
+    }
+
     //encrypted password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
@@ -60,7 +63,7 @@ exports.register = async (req, res) => {
       process.env.SECRET_KEY
     ); //secret key
 
-    res.status(200).send({
+    res.status(201).send({
       status: "success",
       data: {
         id: newUser.id,
