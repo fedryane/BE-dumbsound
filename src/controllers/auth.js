@@ -63,7 +63,6 @@ exports.register = async (req, res) => {
     res.status(201).send({
       status: "success",
       data: {
-        id: newUser.id,
         fullname: newUser.fullname,
         email: newUser.email,
         password: newUser.password,
