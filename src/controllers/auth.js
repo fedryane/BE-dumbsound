@@ -60,7 +60,7 @@ exports.register = async (req, res) => {
       process.env.SECRET_KEY
     ); //secret key
 
-    res.status(201).send({
+    res.status(200).send({
       status: "success",
       data: {
         id: newUser.id,
