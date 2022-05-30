@@ -70,33 +70,74 @@ exports.getMusic = async (req, res) => {
 };
 
 // -------------------------------- add music ------------------------------//
+// exports.addMusic = async (req, res) => {
+//   try {
+//     const result = await cloudinary.uploader.upload(req.file.path, {
+//       folder: "dumbsound_file",
+//       use_filename: true,
+//       unique_filename: false,
+//     });
+
+//     const data = req.body;
+//     let newMusic = await music.create({
+//       ...data,
+//       title: req.body.title,
+//       year: req.body.year,
+//       // artistId: req.user.id,
+//       thumbnail: result.public_id,
+//       attache: result.public_id,
+//     });
+
+//     newMusic = JSON.parse(JSON.stringify(newMusic));
+//     newMusic = {
+//       ...newMusic,
+//     };
+
+//     res.status(200).send({
+//       status: "success",
+//       data: {
+//         newMusic,
+//       },
+//     });
+//   } catch (error) {
+//     console.log(error);
+//     res.send({
+//       status: "failed",
+//       message: "failed to add Music",
+//     });
+//   }
+// };
+
 exports.addMusic = async (req, res) => {
   try {
     const result = await cloudinary.uploader.upload(req.file.path, {
-      folder: "dumbsound_file",
+      folder: "dumbmerch_file",
       use_filename: true,
       unique_filename: false,
     });
 
-    const data = req.body;
-    let newMusic = await music.create({
-      ...data,
+    const data = {
       title: req.body.title,
       year: req.body.year,
       // artistId: req.user.id,
       thumbnail: result.public_id,
       attache: result.public_id,
-    });
-
-    newMusic = JSON.parse(JSON.stringify(newMusic));
-    newMusic = {
-      ...newMusic,
     };
 
+    let newMusic = await music.create(data);
+
+    let musicData = await music.findOne({
+      where: {
+        id: newMusic.id,
+      },
+    });
+    musicData = JSON.parse(JSON.stringify(musicData));
     res.status(200).send({
       status: "success",
       data: {
-        newMusic,
+        ...musicData,
+        thumbnail: process.env.FILE_PATH + musicData.thumbnail,
+        attache: process.env.FILE_PATH + musicData.attache,
       },
     });
   } catch (error) {
