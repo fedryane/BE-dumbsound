@@ -23,7 +23,7 @@ router.delete("/user/:id", deleteUser);
 //---------------------------------------------------------------- router controllers music ----------------------------------------------------------------//
 
 router.post("/music", auth, uploadFile(), addMusic);
-router.get("/musics", auth, getAllMusic);
+router.get("/musics", getAllMusic);
 router.get("/music/:id", auth, getMusic);
 router.patch("/music/:id", auth, uploadFile(), updateMusic);
 router.delete("/music/:id", auth, deleteMusic);
