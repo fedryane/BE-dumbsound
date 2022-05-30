@@ -6,9 +6,6 @@ const jwt = require("jsonwebtoken");
 // register
 exports.register = async (req, res) => {
   try {
-    const data = req.body;
-    const { email, password } = data;
-
     //validation schema
     const schema = joi.object({
       email: joi.string().email().min(5).required(), // joi req.body
