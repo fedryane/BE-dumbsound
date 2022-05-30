@@ -17,7 +17,7 @@ exports.register = async (req, res) => {
   });
 
   const { error } = schema.validate(req.body);
-  
+
   if (error) {
     return res.status(400).send({
       error: {
@@ -63,6 +63,7 @@ exports.register = async (req, res) => {
     res.status(201).send({
       status: "success",
       data: {
+        id: newUser.id,
         fullname: newUser.fullname,
         email: newUser.email,
         password: newUser.password,
