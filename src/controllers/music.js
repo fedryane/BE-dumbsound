@@ -25,8 +25,8 @@ exports.getAllMusic = async (req, res) => {
     musics = musics.map((item) => {
       return {
         ...item,
-        thumbnail: process.env.FILE_PATH + item.thumbnail,
-        attache: process.env.FILE_PATH + item.attache,
+        thumbnail: process.env.FILE_PATH_THUMBNAIL + item.thumbnail,
+        attache: process.env.FILE_PATH_ATTACHE + item.attache,
       };
     });
 
