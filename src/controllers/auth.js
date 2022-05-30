@@ -67,10 +67,6 @@ exports.register = async (req, res) => {
         fullname: newUser.fullname,
         email: newUser.email,
         password: newUser.password,
-        phone: newUser.phone,
-        gender: newUser.gender,
-        address: newUser.address,
-        subscribe: newUser.subscribe,
         // fetching secret key
         token,
       },
