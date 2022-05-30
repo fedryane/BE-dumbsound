@@ -72,11 +72,11 @@ exports.getMusic = async (req, res) => {
 // -------------------------------- add music ------------------------------//
 exports.addMusic = async (req, res) => {
   try {
-    const result = await cloudinary.uploader.upload(req.file.path, {
-      folder: "dumbsound_file",
-      use_filename: true,
-      unique_filename: false,
-    });
+    // const result = await cloudinary.uploader.upload(req.file.path, {
+    //   folder: "dumbsound_file",
+    //   use_filename: true,
+    //   unique_filename: false,
+    // });
 
     const data = req.body;
     let newMusic = await music.create({
@@ -84,8 +84,8 @@ exports.addMusic = async (req, res) => {
       title: req.body.title,
       year: req.body.year,
       // artistId: req.user.id,
-      thumbnail: result.public_id,
-      attache: result.public_id,
+      thumbnail: req.files.thumbnail[0].filename,
+      attache: req.files.attache[0].filename,
     });
 
     newMusic = JSON.parse(JSON.stringify(newMusic));
